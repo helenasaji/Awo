@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yes!</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: #050505; /* Deep black background */
+            overflow: hidden;
+            color: white;
+            font-family: sans-serif; /* Normal, basic font */
+        }
+
+        /* --- Floating Stickers Background Styles --- */
+        #floating-container {
+            position: absolute;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none; 
+        }
+
+        .floating-sticker {
+            position: absolute;
+            background-image: url('sticker2.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            opacity: 0; /* Opacity is controlled inside the animation */
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(110vh) translateX(0) scale(0.8) rotate(-10deg); opacity: 0; }
+            10% { opacity: 0.4; } /* 40% opacity */
+            90% { opacity: 0.4; }
+            100% { transform: translateY(-20vh) translateX(50px) scale(1.1) rotate(15deg); opacity: 0; }
+        }
+
+        /* --- Foreground Content Styles --- */
+        .content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 50px; /* Places the text at the top */
+            gap: 60px; /* Space between the text and the image */
+        }
+
+        .title {
+            font-size: 4.5rem; /* Kept the size as requested */
+            margin: 0;
+        }
+
+        .main-image {
+            max-width: 250px; 
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Dynamic Floating Background -->
+    <div id="floating-container"></div>
+
+    <!-- Main Content -->
+    <div class="content">
+        <div class="title">awoyo</div>
+        <img src="sticker1.png" alt="Sticker 1" class="main-image">
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const container = document.getElementById('floating-container');
+
+            // Generate Floating Stickers (sticker2.png)
+            const numStickers = 15; 
+
+            for (let i = 0; i < numStickers; i++) {
+                let sticker = document.createElement('div');
+                sticker.classList.add('floating-sticker');
+                
+                // Medium sizes ranging from 70px to 120px
+                let size = Math.random() * 50 + 70; 
+                sticker.style.width = `${size}px`;
+                sticker.style.height = `${size}px`;
+                
+                sticker.style.left = `${Math.random() * 100}vw`;
+                
+                let duration = Math.random() * 10 + 15; 
+                let delay = Math.random() * -25; 
+                
+                sticker.style.animationDuration = `${duration}s`;
+                sticker.style.animationDelay = `${delay}s`;
+                
+                container.appendChild(sticker);
+            }
+        });
+    </script>
+</body>
+</html>
