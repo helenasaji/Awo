@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Question</title>
+    <style>
+        /* Importing creative fonts from Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap');
+
+        :root {
+            --gold-light: rgba(255, 215, 0, 0.15);
+            --gold-mid: rgba(255, 165, 0, 0.2);
+            --gold-dark: rgba(255, 140, 0, 0.1);
+            --gold-edge: rgba(255, 220, 100, 0.3);
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: #050505; /* Deep black background for the lights */
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        /* --- Bokeh Background Styles --- */
+        #bokeh-container {
+            position: absolute;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none; /* Allows clicking on buttons through the background */
+        }
+
+        .bokeh-circle {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid var(--gold-edge);
+            animation: floatUp linear infinite;
+            mix-blend-mode: screen; 
+        }
+
+        .dust-particle {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(255, 230, 150, 0.8);
+            box-shadow: 0 0 5px rgba(255, 200, 50, 0.8);
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(110vh) translateX(0) scale(0.8); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-20vh) translateX(50px) scale(1.2); opacity: 0; }
+        }
+
+        /* --- Foreground Content Styles --- */
+        .content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .question {
+            font-family: 'Cinzel', serif; /* Elegant, cinematic font */
+            font-size: 4rem;
+            margin-bottom: 3rem;
+            color: #ffdf00;
+            text-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+            letter-spacing: 2px;
+        }
+
+        /* The Keys Container */
+        .keys-container {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+        }
+
+        /* Golden Glowing Keys */
+        .glow-key {
+            background: linear-gradient(135deg, #ffe066, #d4af37, #b8860b);
+            border: 2px solid #fff3a1;
+            border-radius: 20px;
+            padding: 15px 60px;
+            font-size: 2.5rem;
+            font-family: 'Comic Sans MS', 'Comic Sans', cursive; /* Bold Comic Sans */
+            font-weight: bold;
+            color: #2b1d00; 
+            cursor: pointer;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.6), inset 0 0 15px rgba(255, 255, 255, 0.6);
+            transition: all 0.3s ease;
+        }
+
+        /* Hover Effect */
+        .glow-key:hover {
+            transform: translateY(-8px) scale(1.1);
+            box-shadow: 0 0 45px rgba(255, 215, 0, 1), inset 0 0 20px rgba(255, 255, 255, 0.9);
+            color: #000;
+        }
+
+        /* Click Effect */
+        .glow-key:active {
+            transform: translateY(2px) scale(0.95);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+
+    <div id="bokeh-container"></div>
+
+    <div class="content">
+        <div class="question">Innennaada pruthyekatha?</div>
+        
+        <div class="keys-container">
+            <button class="glow-key" id="btnUvv">Ennaa?</button>
+            <button class="glow-key" id="btnAwo">Awo</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // 1. Generate the Bokeh Background
+            const container = document.getElementById('bokeh-container');
+            const bokehColors = ['var(--gold-light)', 'var(--gold-mid)', 'var(--gold-dark)'];
+
+            // Generate Large Circles
+            for (let i = 0; i < 40; i++) {
+                let circle = document.createElement('div');
+                circle.classList.add('bokeh-circle');
+                let size = Math.random() * 200 + 50;
+                circle.style.width = `${size}px`;
+                circle.style.height = `${size}px`;
+                circle.style.left = `${Math.random() * 100}vw`;
+                circle.style.backgroundColor = bokehColors[Math.floor(Math.random() * bokehColors.length)];
+                
+                let blurAmount = Math.random() > 0.5 ? Math.random() * 8 : 0;
+                circle.style.filter = `blur(${blurAmount}px)`;
+                circle.style.animationDuration = `${Math.random() * 20 + 15}s`;
+                circle.style.animationDelay = `${Math.random() * -30}s`;
+                container.appendChild(circle);
+            }
+
+            // Generate Tiny Glowing Dust
+            for (let i = 0; i < 60; i++) {
+                let dust = document.createElement('div');
+                dust.classList.add('dust-particle');
+                let size = Math.random() * 3 + 1;
+                dust.style.width = `${size}px`;
+                dust.style.height = `${size}px`;
+                dust.style.left = `${Math.random() * 100}vw`;
+                dust.style.animationDuration = `${Math.random() * 10 + 10}s`;
+                dust.style.animationDelay = `${Math.random() * -20}s`;
+                container.appendChild(dust);
+            }
+
+            // 2. Button Interactions for Page Redirection
+            const btnUvv = document.getElementById('btnUvv');
+            const btnAwo = document.getElementById('btnAwo');
+
+            btnUvv.addEventListener('click', () => {
+                window.location.href = "yes.html";
+            });
+
+            btnAwo.addEventListener('click', () => {
+                window.location.href = "No.html";
+            });
+        });
+    </script>
+</body>
+</html>
