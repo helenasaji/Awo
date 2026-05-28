@@ -113,20 +113,23 @@
 </head>
 <body>
 
+    <!-- Dynamic Bokeh Background -->
     <div id="bokeh-container"></div>
 
+    <!-- Main Content -->
     <div class="content">
         <div class="question">Innennaada pruthyekatha?</div>
         
+        <!-- The Two Keys with inline onclick redirection -->
         <div class="keys-container">
-            <button class="glow-key" id="btnUvv">Ennaa?</button>
-            <button class="glow-key" id="btnAwo">Awo</button>
+            <button class="glow-key" onclick="location.href='yes.html'">Ennaa?</button>
+            <button class="glow-key" onclick="location.href='No.html'">Awo</button>
         </div>
     </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            // 1. Generate the Bokeh Background
+            // Generate the Bokeh Background
             const container = document.getElementById('bokeh-container');
             const bokehColors = ['var(--gold-light)', 'var(--gold-mid)', 'var(--gold-dark)'];
 
@@ -159,18 +162,6 @@
                 dust.style.animationDelay = `${Math.random() * -20}s`;
                 container.appendChild(dust);
             }
-
-            // 2. Button Interactions for Page Redirection
-            const btnUvv = document.getElementById('btnUvv');
-            const btnAwo = document.getElementById('btnAwo');
-
-            btnUvv.addEventListener('click', () => {
-                window.location.href = "yes.html";
-            });
-
-            btnAwo.addEventListener('click', () => {
-                window.location.href = "no.html";
-            });
         });
     </script>
 </body>
