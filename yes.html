@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surprise! 🎉</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* Darker gradient so the white text is clear to read */
+            background: linear-gradient(135deg, #0a001a, #150026, #800040); 
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden; 
+            transition: background 0.5s ease;
+            position: relative;
+        }
+
+        /* NEW STAGE 1 BACKGROUND */
+        #stage1-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .circle {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 50%;
+            filter: blur(40px);
+            animation: pulse 5s infinite ease-in-out;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+
+        .star {
+            position: absolute;
+            color: white;
+            font-size: 20px;
+            animation: twinkle 3s linear infinite;
+            opacity: 0.8;
+        }
+
+        @keyframes twinkle {
+            0% { transform: translateY(0px) scale(1); opacity: 0.2; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-30px) scale(1.4); opacity: 0; }
+        }
+
+        @keyframes pulse {
+            0%,100% { transform: translate(-50%,-50%) scale(1); }
+            50% { transform: translate(-50%,-50%) scale(1.2); }
+        }
+
+        /* FLOATING BALLOONS */
+        #balloons-container {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .balloon {
+            position: absolute;
+            width: 80px; 
+            bottom: -150px;
+            animation: flyUp 8s linear infinite;
+            opacity: 0.9;
+        }
+
+        @keyframes flyUp {
+            0% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-60vh) rotate(5deg); }
+            100% { transform: translateY(-120vh) rotate(-5deg); }
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            width: 100%;
+        }
+
+        /* STAGE 1: SWEET START */
+        #start-btn {
+            background: linear-gradient(45deg, #ff6b81, #ff4757);
+            border: none;
+            padding: 20px 40px;
+            font-size: 1.5rem;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(255, 71, 87, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+        }
+        #start-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 25px rgba(255, 71, 87, 0.6);
+        }
+
+        #stage1-wrapper {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 50px; 
+        }
+
+        .sticker {
+            /* Increased sticker size as requested */
+            width: 160px;
+            height: auto;
+            animation: sticker-float 3s ease-in-out infinite;
+            transition: opacity 0.5s ease;
+        }
+
+        @keyframes sticker-float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        #sweet-message {
+            font-size: 4rem;
+            font-weight: 900;
+            margin: 20px 0; 
+            background: -webkit-linear-gradient(#fbc2eb, #a6c1ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 1s ease;
+        }
+
+        /* STAGE 2: AI SCANNER */
+        #emojis-container {
+            display: none; 
+        }
+        .emoji {
+            position: absolute;
+            font-size: 2rem;
+            animation: float 6s linear infinite;
+            opacity: 0.8;
+            z-index: 1;
+        }
+        .emoji:nth-child(1) { left: 10%; top: 100%; animation-delay: 0s; }
+        .emoji:nth-child(2) { left: 80%; top: 100%; animation-delay: 1s; }
+        .emoji:nth-child(3) { left: 50%; top: 100%; animation-delay: 2s; }
+        .emoji:nth-child(4) { left: 25%; top: 100%; animation-delay: 3s; }
+
+        .card {
+            display: none; 
+            width: 90%;
+            max-width: 550px;
+            padding: 45px 35px;
+            margin: 0 auto;
+            text-align: center;
+            border-radius: 35px;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+            position: relative;
+            transform: translateY(-40px);
+            z-index: 10;
+        }
+
+        .tag {
+            display: inline-block;
+            background: white;
+            color: #fb8500;
+            font-weight: 700;
+            padding: 8px 18px;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+        }
+
+        .card h1 {
+            font-size: 2.2rem;
+            line-height: 1.3;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .counter {
+            font-size: 8rem;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5), 0 0 40px rgba(255, 183, 3, 0.7);
+            transition: 0.2s;
+        }
+
+        .years {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-top: -15px;
+        }
+
+        .message {
+            margin-top: 35px;
+            opacity: 0;
+            transform: translateY(20px) scale(0.9);
+            transition: 0.6s ease;
+        }
+
+        .show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .main-text {
+            font-size: 1.7rem;
+            font-weight: 800;
+            line-height: 1.6;
+            color: #ffffff;
+            display: inline-block;
+            padding: 10px 22px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 224, 102, 0.28));
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 20px rgba(255, 224, 102, 0.35);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+        }
+
+        /* STAGE 3: THE MODAL BILL */
+        .modal-card {
+            display: none;
+            background: white;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            z-index: 20;
+            width: 90%;
+            max-width: 400px;
+            margin: 0 auto;
+            transform: translateY(-200%);
+            animation: dropIn 0.8s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes dropIn {
+            to { transform: translateY(0); }
+        }
+
+        .modal-card h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+        }
+
+        .buttons {
+            position: relative;
+            width: 300px;
+            height: 150px;
+            margin: 0 auto;
+        }
+
+        .modal-card button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            font-weight: bold;
+            color: white;
+            position: absolute; 
+            transition: 0.2s; 
+        }
+
+        #btn-yes {
+            left: 40px;
+            top: 50px;
+            background-color: #2ecc71;
+        }
+
+        #btn-yes:hover {
+            background-color: #27ae60;
+            transform: scale(1.05);
+        }
+
+        #btn-no {
+            left: 160px;
+            top: 50px;
+            background-color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="stage1-bg">
+        <div class="circle"></div>
+    </div>
+
+    <div id="balloons-container">
+        <img src="bln1.png" class="balloon" style="left: 10%; animation-delay: 0s;">
+        <img src="bln2.png" class="balloon" style="left: 30%; animation-delay: 2s;">
+        <img src="bln3.png" class="balloon" style="left: 60%; animation-delay: 1s;">
+        <img src="bln4.png" class="balloon" style="left: 80%; animation-delay: 3s;">
+        <img src="bln1.png" class="balloon" style="left: 45%; animation-delay: 4.5s;">
+        <img src="bln3.png" class="balloon" style="left: 70%; animation-delay: 0.5s;">
+    </div>
+
+    <div id="emojis-container">
+        <div class="emoji">👴</div>
+        <div class="emoji">🎂</div>
+        <div class="emoji">💀</div>
+        <div class="emoji">🦯</div>
+    </div>
+
+    <div class="container">
+        <button id="start-btn">click here 🎁 </button>
+
+        <div id="stage1-wrapper">
+            <img src="sticker3.png" class="sticker" id="sticker-top" alt="Sticker Top">
+            <div id="sweet-message">Happy birthday achumwone! ✨</div>
+            <img src="sticker3.png" class="sticker" id="sticker-bottom" alt="Sticker Bottom">
+        </div>
+
+        <div class="card" id="scanner-card">
+            <div class="tag">AI Birthday Scanner</div>
+            <h1>What age are you turning this year? 🤔</h1>
+            <div class="counter" id="counter">0</div>
+            <div class="years">Years Old</div>
+            
+            <div class="message" id="message">
+                <div class="main-text">🎉 Shashtipoorthi Ashamsakal Nenbo 👴</div>
+            </div>
+        </div>
+
+        <div class="modal-card" id="bill-container">
+            <h2><b>Chelav</b></h2>
+            <div class="buttons">
+                <button id="btn-yes">Tharum</button>
+                <button id="btn-no">Tharoola</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const startBtn = document.getElementById('start-btn');
+        const stage1Wrapper = document.getElementById('stage1-wrapper');
+        const sweetMsg = document.getElementById('sweet-message');
+        const scannerCard = document.getElementById('scanner-card');
+        const emojisContainer = document.getElementById('emojis-container');
+        const billContainer = document.getElementById('bill-container');
+        const stage1Bg = document.getElementById('stage1-bg');
+        const balloonsContainer = document.getElementById('balloons-container');
+        const body = document.body;
+        
+        const counter = document.getElementById("counter");
+        const message = document.getElementById("message");
+        const btnNo = document.getElementById('btn-no');
+        const btnYes = document.getElementById('btn-yes');
+        const btnContainer = document.querySelector('.buttons');
+
+        let count = 0;
+        const target = 60;
+
+        // Generate the floating stars for the background
+        for(let i = 0; i < 40; i++){
+            let star = document.createElement("div");
+            star.classList.add("star");
+            star.innerHTML = "✨";
+
+            star.style.left = Math.random() * 100 + "vw";
+            star.style.top = Math.random() * 100 + "vh";
+            star.style.fontSize = (Math.random() * 25 + 10) + "px";
+            star.style.animationDuration = (Math.random() * 4 + 2) + "s";
+            star.style.animationDelay = Math.random() * 5 + "s";
+
+            stage1Bg.appendChild(star);
+        }
+
+        // Click to Start
+        startBtn.addEventListener('click', () => {
+            // Hide Start button, Show Sweet Message, Stickers, and Balloons
+            startBtn.style.display = 'none';
+            stage1Wrapper.style.display = 'flex';
+            balloonsContainer.style.display = 'block';
+            setTimeout(() => {
+                sweetMsg.style.opacity = '1';
+                sweetMsg.style.transform = 'scale(1)';
+            }, 50);
+
+            // Transition to AI Scanner Card
+            setTimeout(() => {
+                stage1Wrapper.style.display = 'none';
+                stage1Bg.style.display = 'none'; 
+                balloonsContainer.style.display = 'none'; // Hide balloons for Stage 2
+                
+                body.style.background = "radial-gradient(circle at top left, #ffb703, #fb8500, #1d3557)";
+                
+                emojisContainer.style.display = 'block';
+                scannerCard.style.display = 'block';
+
+                setTimeout(updateCounter, 800);
+            }, 3000);
+        });
+
+        // COUNTER ANIMATION LOGIC
+        function updateCounter() {
+            if (count < target) {
+                count++;
+                counter.innerText = count;
+
+                counter.style.transform = "scale(1.15) rotate(2deg)";
+                setTimeout(() => {
+                    counter.style.transform = "scale(1) rotate(0deg)";
+                }, 100);
+
+                setTimeout(updateCounter, 35);
+            } else {
+                message.classList.add("show");
+
+                // Transition to Chelav Modal Bill
+                setTimeout(() => {
+                    scannerCard.style.display = 'none';
+                    emojisContainer.style.display = 'none';
+                    
+                    // Change background to match the clean modal look
+                    body.style.background = "#f4f7f6"; 
+                    billContainer.style.display = 'block';
+                }, 4000);
+            }
+        }
+
+        // DODGE LOGIC (Inside Container)
+        function dodgeButton() {
+            // Calculate boundaries relative to the .buttons container
+            const maxX = btnContainer.clientWidth - btnNo.offsetWidth;
+            const maxY = btnContainer.clientHeight - btnNo.offsetHeight;
+
+            // Generate new coordinates inside the box
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+
+            // Apply new position
+            btnNo.style.left = randomX + "px";
+            btnNo.style.top = randomY + "px";
+        }
+
+        // Trigger #1: Mouse Hover
+        btnNo.addEventListener('mouseover', dodgeButton);
+
+        // Trigger #2: Touchscreen
+        btnNo.addEventListener('touchstart', (event) => {
+            event.preventDefault(); 
+            dodgeButton();
+        });
+
+        // SUCCESS LOGIC
+        btnYes.addEventListener('click', () => {
+            billContainer.innerHTML = "<h2 style='color: #2ecc71; margin: 0;'>Nanniyunde! 😌</h2>";
+        });
+    </script>
+</body>
+</html>
