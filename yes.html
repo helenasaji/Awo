@@ -278,14 +278,14 @@
 
         .modal-card h2 {
             color: #333;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             font-size: 2.5rem;
         }
 
         .buttons {
             position: relative;
             width: 100%;
-            height: 250px;
+            height: 200px; /* Space for the buttons to jump around in the middle */
             margin: 0 auto;
         }
 
@@ -321,14 +321,24 @@
             /* ULTRA-FAST SNAPPY BOUNCE ANIMATION */
             transition: left 0.08s ease-out, top 0.08s ease-out !important; 
         }
+
+        /* CSS FOR THE GIF (AT THE BOTTOM NOW) */
+        .chelav-gif {
+            width: 100%;
+            max-width: 250px;
+            border-radius: 8px;
+            margin-top: 10px; /* Space between jumping area and GIF */
+        }
     </style>
 </head>
 <body>
 
+    <!-- Stage 1 Background (Pulse & Stars) -->
     <div id="stage1-bg">
         <div class="circle"></div>
     </div>
 
+    <!-- Floating Balloons (For Stage 1) -->
     <div id="balloons-container">
         <img src="bln1.png" class="balloon" style="left: 10%; animation-delay: 0s;">
         <img src="bln2.png" class="balloon" style="left: 30%; animation-delay: 2s;">
@@ -338,6 +348,7 @@
         <img src="bln3.png" class="balloon" style="left: 70%; animation-delay: 0.5s;">
     </div>
 
+    <!-- Floating Emojis (For Stage 2) -->
     <div id="emojis-container">
         <div class="emoji">👴</div>
         <div class="emoji">🎂</div>
@@ -346,14 +357,17 @@
     </div>
 
     <div class="container">
+        <!-- Stage 1: Sweet Message + Stickers + Gift Button -->
         <div id="stage1-wrapper">
             <img src="sticker3.png" class="sticker" id="sticker-top" alt="Sticker Top">
             <div id="sweet-message">Happy birthday achumwone! ✨</div>
             <img src="sticker3.png" class="sticker" id="sticker-bottom" alt="Sticker Bottom">
             
+            <!-- BAIT BUTTON -->
             <button id="gift-btn" class="action-btn">Claim your gift 🎁</button>
         </div>
 
+        <!-- Stage 2: AI Scanner Card -->
         <div class="card" id="scanner-card">
             <div class="tag">AI Birthday Scanner</div>
             <h1>What age are you turning this year? 🤔</h1>
@@ -365,12 +379,18 @@
             </div>
         </div>
 
+        <!-- Stage 3: The Modal Bill -->
         <div class="modal-card" id="bill-container">
             <h2><b>Chelav</b></h2>
+            
+            <!-- BUTTONS IN THE MIDDLE -->
             <div class="buttons">
                 <button id="btn-yes">Tharum</button>
                 <button id="btn-no">Tharoola</button>
             </div>
+
+            <!-- GIF AT THE BOTTOM -->
+            <img src="gimme.gif" alt="Chelav GIF" class="chelav-gif">
         </div>
     </div>
 
@@ -486,4 +506,3 @@
     </script>
 </body>
 </html>
-
