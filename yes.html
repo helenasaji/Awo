@@ -167,6 +167,429 @@
         /* STAGE 2: AI SCANNER */
         #emojis-container {
             display: none; 
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+            pointer-events: none;
+        }
+        
+        .emoji {
+            position: absolute;
+            font-size: 2rem; /* Normal size */
+            animation: float 6s linear infinite; 
+        }
+        
+        .emoji:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .emoji:nth-child(2) { left: 80%; animation-delay: 1.5s; }
+        .emoji:nth-child(3) { left: 50%; animation-delay: 3s; }
+        .emoji:nth-child(4) { left: 25%; animation-delay: 4.5s; }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh);
+                opacity: 1;
+            }
+            50% {
+                opacity: 0; /* Fades out by the time it reaches the middle */
+            }
+            100% {
+                transform: translateY(-10vh);
+                opacity: 0;
+            }
+        }
+
+        .card {
+            display: none; 
+            width: 90%;
+            max-width: 550px;
+            padding: 45px 35px;
+            margin: 0 auto;
+            text-align: center;
+            border-radius: 35px;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+            position: relative;
+            transform: translateY(-40px);
+            z-index: 10;
+        }
+
+        .tag {
+            display: inline-block;
+            background: white;
+            color: #fb8500;
+            font-weight: 700;
+            padding: 8px 18px;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+        }
+
+        .card h1 {
+            font-size: 2.2rem;
+            line-height: 1.3;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .counter {
+            font-size: 8rem;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5), 0 0 40px rgba(255, 183, 3, 0.7);
+            transition: 0.2s;
+        }
+
+        .years {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-top: -15px;
+        }
+
+        .message {
+            margin-top: 35px;
+            opacity: 0;
+            transform: translateY(20px) scale(0.9);
+            transition: 0.6s ease;
+        }
+
+        .show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .main-text {
+            font-size: 1.7rem;
+            font-weight: 800;
+            line-height: 1.6;
+            color: #ffffff;
+            display: inline-block;
+            padding: 10px 22px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 224, 102, 0.28));
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 20px rgba(255, 224, 102, 0.35);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+        }
+
+        /* STAGE 3: THE MODAL BILL */
+        .modal-card {
+            display: none;
+            background: white;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            z-index: 20;
+            width: 90%;
+            max-width: 400px;
+            margin: 0 auto;
+            transform: translateY(-200%);
+            animation: dropIn 0.8s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes dropIn {
+            to { transform: translateY(0); }
+        }
+
+        .modal-card h2 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+
+        .buttons {
+            position: relative;
+            width: 100%;
+            height: 200px; 
+            margin: 0 auto;
+        }
+
+        .modal-card button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            font-weight: bold;
+            color: white;
+            position: absolute; 
+        }
+
+        #btn-yes {
+            left: 50%;
+            top: 20px;
+            transform: translateX(-120%);
+            background-color: #2ecc71;
+            transition: 0.2s;
+        }
+
+        #btn-yes:hover {
+            background-color: #27ae60;
+            transform: translateX(-120%) scale(1.05);
+        }
+
+        #btn-no {
+            left: 50%;
+            top: 20px;
+            transform: translateX(20%);
+            background-color: #e74c3c;
+            /* ULTRA-FAST SNAPPY BOUNCE ANIMATION */
+            transition: left 0.08s ease-out, top 0.08s ease-out !important; 
+        }
+
+        /* CSS FOR THE GIF */
+        .chelav-gif {
+            width: 100%;
+            max-width: 250px;
+            border-radius: 8px;
+            margin-top: 10px; 
+        }
+    </style>
+</head>
+<body>
+
+    <div id="stage1-bg">
+        <div class="circle"></div>
+    </div>
+
+    <div id="balloons-container">
+        <img src="bln1.png" class="balloon" style="left: 10%; animation-delay: 0s;">
+        <img src="bln2.png" class="balloon" style="left: 30%; animation-delay: 2s;">
+        <img src="bln3.png" class="balloon" style="left: 60%; animation-delay: 1s;">
+        <img src="bln4.png" class="balloon" style="left: 80%; animation-delay: 3s;">
+        <img src="bln1.png" class="balloon" style="left: 45%; animation-delay: 4.5s;">
+        <img src="bln3.png" class="balloon" style="left: 70%; animation-delay: 0.5s;">
+    </div>
+
+    <div id="emojis-container">
+        <div class="emoji">🪄</div>
+        <div class="emoji">🪄</div>
+        <div class="emoji">🪄</div>
+        <div class="emoji">🪄</div>
+    </div>
+
+    <div class="container">
+        <div id="stage1-wrapper">
+            <img src="sticker3.png" class="sticker" id="sticker-top" alt="Sticker Top">
+            <div id="sweet-message">Happy birthday achumwone! ✨</div>
+            <img src="sticker3.png" class="sticker" id="sticker-bottom" alt="Sticker Bottom">
+            
+            <button id="gift-btn" class="action-btn">Claim your gift 🎁</button>
+        </div>
+
+        <div class="card" id="scanner-card">
+            <div class="tag">AI Birthday Scanner</div>
+            <h1>What age are you turning this year? 🤔</h1>
+            <div class="counter" id="counter">0</div>
+            <div class="years">Years Old</div>
+            
+            <div class="message" id="message">
+                <div class="main-text">🎉 Shashtipoorthi Ashamsakal Nenbo 👴</div>
+            </div>
+        </div>
+
+        <div class="modal-card" id="bill-container">
+            <h2><b>Chelav</b></h2>
+            
+            <div class="buttons">
+                <button id="btn-yes">Tharum</button>
+                <button id="btn-no">Tharoola</button>
+            </div>
+
+            <img src="gimme.gif" alt="Chelav GIF" class="chelav-gif">
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const stage1Wrapper = document.getElementById('stage1-wrapper');
+        const sweetMsg = document.getElementById('sweet-message');
+        const giftBtn = document.getElementById('gift-btn'); 
+        const scannerCard = document.getElementById('scanner-card');
+        const emojisContainer = document.getElementById('emojis-container');
+        const billContainer = document.getElementById('bill-container');
+        const stage1Bg = document.getElementById('stage1-bg');
+        const balloonsContainer = document.getElementById('balloons-container');
+        const body = document.body;
+        
+        const counter = document.getElementById("counter");
+        const message = document.getElementById("message");
+        const btnNo = document.getElementById('btn-no');
+        const btnYes = document.getElementById('btn-yes');
+        const btnContainer = document.querySelector('.buttons');
+
+        let count = 0;
+        const target = 60;
+
+        // Generate the floating stars
+        for(let i = 0; i < 40; i++){
+            let star = document.createElement("div");
+            star.classList.add("star");
+            star.innerHTML = "✨";
+            star.style.left = Math.random() * 100 + "vw";
+            star.style.top = Math.random() * 100 + "vh";
+            star.style.fontSize = (Math.random() * 25 + 10) + "px";
+            star.style.animationDuration = (Math.random() * 4 + 2) + "s";
+            star.style.animationDelay = Math.random() * 5 + "s";
+            stage1Bg.appendChild(star);
+        }
+
+        // When the page loads, trigger the intro animations automatically
+        window.onload = () => {
+            setTimeout(() => {
+                sweetMsg.style.opacity = '1';
+                sweetMsg.style.transform = 'scale(1)';
+            }, 50);
+
+            // Wait 3 seconds, THEN slowly fade in the Gift Trap Button
+            setTimeout(() => {
+                giftBtn.style.opacity = '1';
+                giftBtn.style.transform = 'scale(1)';
+            }, 3000);
+        };
+
+        // THE TRAP: Clicking "Claim your gift" triggers the AI Scanner
+        giftBtn.addEventListener('click', () => {
+            stage1Wrapper.style.display = 'none';
+            stage1Bg.style.display = 'none'; 
+            balloonsContainer.style.display = 'none'; 
+            
+            body.style.background = "radial-gradient(circle at top left, #ffb703, #fb8500, #1d3557)";
+            
+            emojisContainer.style.display = 'block';
+            scannerCard.style.display = 'block';
+
+            setTimeout(updateCounter, 800);
+        });
+
+        // COUNTER ANIMATION
+        function updateCounter() {
+            if (count < target) {
+                count++;
+                counter.innerText = count;
+                counter.style.transform = "scale(1.15) rotate(2deg)";
+                setTimeout(() => {
+                    counter.style.transform = "scale(1) rotate(0deg)";
+                }, 100);
+                setTimeout(updateCounter, 35);
+            } else {
+                message.classList.add("show");
+                setTimeout(() => {
+                    scannerCard.style.display = 'none';
+                    emojisContainer.style.display = 'none';
+                    body.style.background = "#f4f7f6"; 
+                    billContainer.style.display = 'block';
+                }, 4000);
+            }
+        }
+
+        // AGGRESSIVE DODGE LOGIC
+        function dodgeButton() {
+            btnNo.style.transform = "none";
+            
+            const maxX = btnContainer.clientWidth - btnNo.offsetWidth;
+            const maxY = btnContainer.clientHeight - btnNo.offsetHeight;
+
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+
+            btnNo.style.left = randomX + "px";
+            btnNo.style.top = randomY + "px";
+        }
+
+        btnNo.addEventListener('mouseenter', dodgeButton);
+        btnNo.addEventListener('touchstart', (event) => {
+            event.preventDefault(); 
+            dodgeButton();
+        });
+
+        // SUCCESS LOGIC
+        btnYes.addEventListener('click', () => {
+            billContainer.innerHTML = "<h2 style='color: #2ecc71; margin: 0;'>Nanniyunde! 😌</h2>";
+        });
+    </script>
+</body>
+</html>
+            50% { transform: translateY(-60vh) rotate(5deg); }
+            100% { transform: translateY(-120vh) rotate(-5deg); }
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            width: 100%;
+        }
+
+        /* BUTTON STYLES */
+        .action-btn {
+            border: none;
+            padding: 20px 40px;
+            font-size: 1.5rem;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        #gift-btn {
+            background: linear-gradient(45deg, #f1c40f, #f39c12);
+            box-shadow: 0 10px 20px rgba(243, 156, 18, 0.4);
+            margin-top: 20px;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 1.5s ease;
+        }
+        #gift-btn:hover {
+            transform: translateY(-5px) scale(1.05) !important;
+            box-shadow: 0 15px 25px rgba(243, 156, 18, 0.6);
+        }
+
+        /* STAGE 1: SWEET START */
+        #stage1-wrapper {
+            display: flex; /* Visible immediately */
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 30px; 
+        }
+
+        .sticker {
+            width: 160px;
+            height: auto;
+            animation: sticker-float 3s ease-in-out infinite;
+            transition: opacity 0.5s ease;
+        }
+
+        @keyframes sticker-float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        #sweet-message {
+            font-size: 4rem;
+            font-weight: 900;
+            margin: 0; 
+            background: -webkit-linear-gradient(#fbc2eb, #a6c1ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 1s ease;
+        }
+
+        /* STAGE 2: AI SCANNER */
+        #emojis-container {
+            display: none; 
         }
         .emoji {
             position: absolute;
