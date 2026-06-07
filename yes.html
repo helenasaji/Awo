@@ -3,96 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Surprise! 🎉</title>
-    
+    <title>Happy Birthday!</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
-
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            /* Darker gradient so the white text is clear to read */
+            display: flex; justify-content: center; align-items: center;
             background: linear-gradient(135deg, #0a001a, #150026, #800040); 
-            color: white;
-            font-family: 'Poppins', sans-serif;
-            overflow: hidden; 
-            transition: background 0.5s ease;
-            position: relative;
+            color: white; font-family: 'Poppins', sans-serif;
+            overflow: hidden; position: relative;
         }
-
-        /* STAGE 1 BACKGROUND */
-        #stage1-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none;
-        }
-
+        #stage1-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
         .circle {
-            position: absolute;
-            width: 400px;
-            height: 400px;
-            background: rgba(255,255,255,0.08);
-            border-radius: 50%;
-            filter: blur(40px);
-            animation: pulse 5s infinite ease-in-out;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%,-50%);
+            position: absolute; width: 400px; height: 400px; background: rgba(255,255,255,0.08);
+            border-radius: 50%; filter: blur(40px); animation: pulse 5s infinite ease-in-out;
+            top: 50%; left: 50%; transform: translate(-50%,-50%);
         }
-
-        .star {
-            position: absolute;
-            color: white;
-            font-size: 20px;
-            animation: twinkle 3s linear infinite;
-            opacity: 0.8;
-        }
-
+        .star { position: absolute; color: white; font-size: 20px; animation: twinkle 3s linear infinite; opacity: 0.8; }
         @keyframes twinkle {
             0% { transform: translateY(0px) scale(1); opacity: 0.2; }
             50% { opacity: 1; }
             100% { transform: translateY(-30px) scale(1.4); opacity: 0; }
         }
-
         @keyframes pulse {
             0%,100% { transform: translate(-50%,-50%) scale(1); }
             50% { transform: translate(-50%,-50%) scale(1.2); }
         }
-
-        /* FLOATING BALLOONS */
-        #balloons-container {
-            display: block; /* Visible immediately */
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 2;
-            pointer-events: none;
-        }
-
-        .balloon {
-            position: absolute;
-            width: 80px; 
-            bottom: -150px;
-            animation: flyUp 8s linear infinite;
-            opacity: 0.9;
-        }
-
+        #balloons-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
+        .balloon { position: absolute; width: 80px; bottom: -150px; animation: flyUp 8s linear infinite; opacity: 0.9; }
         @keyframes flyUp {
             0% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-60vh) rotate(5deg); }
+            100% { transform: translateY(-120vh) rotate(-5deg); }
+        }
+        .container { text-align: center; position: relative; z-index: 10; width: 100%; }
+        #stage1-wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px; }
+        .sticker { width: 160px; height: auto; animation: sticker-float 3s ease-in-out infinite; }
+        @keyframes sticker-float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        #sweet-message {
+            font-size: 4rem; font-weight: 900; margin: 0; 
+            background: -webkit-linear-gradient(#fbc2eb, #a6c1ee);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            opacity: 0; transform: scale(0.8); transition: all 1s ease;
+        }
+        #gift-btn {
+            border: none; padding: 20px 40px; font-size: 1.5rem; color: white; border-radius: 50px; cursor: pointer;
+            font-family: 'Poppins', sans-serif; font-weight: 700;
+            background: linear-gradient(45deg, #f1c40f, #f39c12); box-shadow: 0 10px 20px rgba(243, 156, 18, 0.4);
+            margin-top: 20px; opacity: 0; transform: scale(0.8); transition: all 1.5s ease;
+        }
+        #gift-btn:hover { transform: translateY(-5px) scale(1.05) !important; box-shadow: 0 15px 25px rgba(243, 156, 18, 0.6); }
+    </style>
+</head>
+<body>
+    <div id="stage1-bg"><div class="circle"></div></div>
+
+    <div id="balloons-container">
+        <img src="bln1.png" class="balloon" style="left: 10%; animation-delay: 0s;">
+        <img src="bln2.png" class="balloon" style="left: 30%; animation-delay: 2s;">
+        <img src="bln3.png" class="balloon" style="left: 60%; animation-delay: 1s;">
+        <img src="bln4.png" class="balloon" style="left: 80%; animation-delay: 3s;">
+        <img src="bln1.png" class="balloon" style="left: 45%; animation-delay: 4.5s;">
+        <img src="bln3.png" class="balloon" style="left: 70%; animation-delay: 0.5s;">
+    </div>
+
+    <div class="container">
+        <div id="stage1-wrapper">
+            <img src="sticker3.png" class="sticker" alt="Sticker Top">
+            <div id="sweet-message">Happy birthday achumwone! ✨</div>
+            <img src="sticker3.png" class="sticker" alt="Sticker Bottom">
+            <button id="gift-btn">Claim your gift 🎁</button>
+        </div>
+    </div>
+
+    <script>
+        const stage1Bg = document.getElementById('stage1-bg');
+        const sweetMsg = document.getElementById('sweet-message');
+        const giftBtn = document.getElementById('gift-btn');
+
+        // Generate stars
+        for(let i = 0; i < 40; i++){
+            let star = document.createElement("div");
+            star.classList.add("star");
+            star.innerHTML = "✨";
+            star.style.left = Math.random() * 100 + "vw";
+            star.style.top = Math.random() * 100 + "vh";
+            star.style.fontSize = (Math.random() * 25 + 10) + "px";
+            star.style.animationDuration = (Math.random() * 4 + 2) + "s";
+            star.style.animationDelay = Math.random() * 5 + "s";
+            stage1Bg.appendChild(star);
+        }
+
+        window.onload = () => {
+            setTimeout(() => {
+                sweetMsg.style.opacity = '1';
+                sweetMsg.style.transform = 'scale(1)';
+            }, 50);
+
+            setTimeout(() => {
+                giftBtn.style.opacity = '1';
+                giftBtn.style.transform = 'scale(1)';
+            }, 3000);
+        };
+
+        // REDIRECT TO SECOND PAGE
+        giftBtn.addEventListener('click', () => {
+            window.location.href = 'scanner.html';
+        });
+    </script>
+</body>
+</html>
             50% { transform: translateY(-60vh) rotate(5deg); }
             100% { transform: translateY(-120vh) rotate(-5deg); }
         }
