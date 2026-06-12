@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Awoyo</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: #050505; /* Deep black background */
+            overflow: hidden;
+            color: white;
+            font-family: sans-serif; /* Normal, basic font */
+        }
+
+        /* --- Floating Stickers Background Styles --- */
+        #floating-container {
+            position: absolute;
+            top: 0; 
+            left: 0; 
+            width: 100vw; 
+            height: 100vh;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none; 
+        }
+
+        .floating-sticker {
+            position: absolute;
+            /* FIXED: Added Folder/ here so it finds the image! */
+            background-image: url('Folder/sticker2.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            opacity: 0; 
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { 
+                transform: translateY(110vh) translateX(0) scale(0.8); 
+                opacity: 0; 
+            }
+            10% { 
+                opacity: 0.4; 
+            } 
+            90% { 
+                opacity: 0.4; 
+            }
+            100% { 
+                transform: translateY(-20vh) translateX(50px) scale(1.1); 
+                opacity: 0; 
+            }
+       }
+
+        /* --- Foreground Content Styles --- */
+        .content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 50px; /* Places the text at the top */
+            gap: 60px; /* Space between the text and the image */
+        }
+
+        .title {
+            font-size: 3.5rem; 
+            margin: 0;
+            color: #ffffff; 
+            text-shadow: 2px 2px #00ffff; 
+        }
+
+        .main-image {
+            margin-top: 30px;
+            max-width: 300px; /* Adjust if the main image is too big/small */
+            height: auto;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="floating-container"></div>
+
+    <div class="content">
+        <div class="title">awoyo </div>
+        <img src="Folder/sticker1.png" alt="Sticker 1" class="main-image">
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const container = document.getElementById('floating-container');
+
+            // Generate Floating Stickers (sticker2.png)
+            const numStickers = 15; 
+
+            for (let i = 0; i < numStickers; i++) {
+                let sticker = document.createElement('div');
+                sticker.classList.add('floating-sticker');
+                
+                // Medium sizes ranging from 100px to 150px
+                let size = Math.random() * 50 + 100; 
+                sticker.style.width = `${size}px`;
+                sticker.style.height = `${size}px`;
+                
+                sticker.style.left = `${Math.random() * 100}vw`;
+                
+                let duration = Math.random() * 10 + 15; 
+                let delay = Math.random() * -25; 
+                
+                sticker.style.animationDuration = `${duration}s`;
+                sticker.style.animationDelay = `${delay}s`;
+                
+                container.appendChild(sticker);
+            }
+        });
+    </script>
+</body>
+</html>
