@@ -109,18 +109,40 @@
             transform: translateY(2px) scale(0.95);
             box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
         }
+
+        /* --- MOBILE RESPONSIVENESS FIXES --- */
+        @media (max-width: 600px) {
+            .content {
+                width: 100%;
+                box-sizing: border-box;
+                padding: 0 15px; /* Keeps everything off the absolute edge of the phone */
+            }
+
+            .question {
+                font-size: 11vw !important; /* Dynamically shrinks long text to fit any phone width */
+                line-height: 1.4;
+                word-wrap: break-word;
+                margin-bottom: 2.5rem;
+            }
+
+            .keys-container {
+                gap: 1.5rem; /* Reduces the massive gap between buttons so they fit */
+            }
+
+            .glow-key {
+                font-size: 1.6rem; /* Scales down the button text */
+                padding: 12px 25px; /* Slims down the button width */
+            }
+        }
     </style>
 </head>
 <body>
 
-    <!-- Dynamic Bokeh Background -->
     <div id="bokeh-container"></div>
 
-    <!-- Main Content -->
     <div class="content">
         <div class="question">Naale ennaada pruthyekatha?</div>
         
-        <!-- The Two Keys with inline onclick redirection -->
         <div class="keys-container">
             <button class="glow-key" onclick="location.href='yes.html'">Ennaa?</button>
             <button class="glow-key" onclick="location.href='no.html'">Awo</button>
