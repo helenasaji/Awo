@@ -13,6 +13,7 @@
             background-color: #f4f7f6; 
             font-family: 'Poppins', sans-serif;
             overflow: hidden;
+            position: relative; /* Added just to keep floating stickers contained */
         }
         
         .wrapper {
@@ -43,6 +44,29 @@
             100% { transform: scale(1); opacity: 1; }
         }
         h1 { color: #2ecc71; font-size: 3.5rem; margin: 0; }
+
+        /* --- BACKGROUND FLOATING STICKER STYLES ADDED HERE --- */
+        .bg-sticker {
+            position: absolute;
+            bottom: -150px;
+            pointer-events: none;
+            z-index: 0; /* Keeps them behind your modal card */
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { 
+                transform: translateY(0) rotate(0deg); 
+                opacity: 0.15; 
+            }
+            50% { 
+                opacity: 0.15; 
+            }
+            100% { 
+                transform: translateY(-110vh) rotate(360deg); 
+                opacity: 0; 
+            }
+        }
     </style>
 </head>
 <body>
@@ -55,5 +79,30 @@
         </div>
     </div>
 
+    <script>
+        function createFloatingStickers() {
+            const totalStickers = 15; 
+            
+            for(let i = 0; i < totalStickers; i++) {
+                const sticker = document.createElement("img");
+                sticker.src = "Folder/sticker6.png"; // Pulls sticker6.png for the background!
+                sticker.className = "bg-sticker";
+                
+                const size = Math.random() * 60 + 50; 
+                const leftPos = Math.random() * 100; 
+                const duration = Math.random() * 12 + 10; 
+                const delay = Math.random() * 15; 
+                
+                sticker.style.width = size + "px";
+                sticker.style.left = leftPos + "vw"; 
+                sticker.style.animationDuration = duration + "s";
+                sticker.style.animationDelay = delay + "s";
+                
+                document.body.appendChild(sticker);
+            }
+        }
+
+        createFloatingStickers();
+    </script>
 </body>
 </html>
