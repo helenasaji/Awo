@@ -7,13 +7,25 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
+        
+        /* Added html and body locks to stop the screen from stretching */
+        html, body {
+            width: 100%;
             height: 100vh;
+            overflow: hidden; 
+        }
+
+        body {
             display: flex; justify-content: center; align-items: center;
             background: linear-gradient(135deg, #0a001a, #150026, #800040); 
+            /* These three lines fix your background cutoff issue! */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
             color: white; font-family: 'Poppins', sans-serif;
-            overflow: hidden; position: relative;
+            position: relative;
         }
+
         #stage1-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
         .circle {
             position: absolute; width: 400px; height: 400px; background: rgba(255,255,255,0.08);
@@ -58,6 +70,25 @@
             margin-top: 20px; opacity: 0; transform: scale(0.8); transition: all 1.5s ease;
         }
         #gift-btn:hover { transform: translateY(-5px) scale(1.05) !important; box-shadow: 0 15px 25px rgba(243, 156, 18, 0.6); }
+
+        /* --- MOBILE RESPONSIVENESS FIXES --- */
+        @media (max-width: 600px) {
+            #stage1-wrapper {
+                gap: 15px !important; 
+            }
+            .sticker {
+                width: 120px !important; 
+            }
+            #sweet-message {
+                font-size: 14vw !important; 
+                line-height: 1.2; 
+            }
+            #gift-btn {
+                padding: 15px 30px !important; 
+                font-size: 1.2rem !important;
+                margin-top: 5px !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -73,7 +104,7 @@
     <div class="container">
         <div id="stage1-wrapper">
             <img src="Folder/sticker3.png" class="sticker" alt="Sticker Top">
-            <div id="sweet-message">Happy Birthday Achuuu </div>
+            <div id="sweet-message">Happy Birthday Achuuu</div>
             <img src="Folder/sticker3.png" class="sticker" alt="Sticker Bottom">
             <button id="gift-btn">Claim your gift 🎁</button>
         </div>
@@ -89,7 +120,9 @@
             let star = document.createElement("div");
             star.classList.add("star");
             star.innerHTML = "✨";
-            star.style.left = Math.random() * 100 + "vw";
+            
+            /* Made sure stars don't spawn completely off the right edge */
+            star.style.left = Math.random() * 95 + "vw"; 
             star.style.top = Math.random() * 100 + "vh";
             star.style.fontSize = (Math.random() * 25 + 10) + "px";
             star.style.animationDuration = (Math.random() * 4 + 2) + "s";
